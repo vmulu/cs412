@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-kb%b0c4lpcdxp9_ey2$f7am@#%9-xwfq69)yd!t1pho2w7zqyb
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'cs-webapps.bu.edu
+    'cs-webapps.bu.edu'
 ]
 
 
