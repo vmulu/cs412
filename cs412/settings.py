@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,8 @@ SECRET_KEY = 'django-insecure-kb%b0c4lpcdxp9_ey2$f7am@#%9-xwfq69)yd!t1pho2w7zqyb
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'cs-webapps.bu.edu'
+    'cs-webapps.bu.edu',
+    '*' # from example vid
 ]
 
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hw', # from example vid
 ]
 
 MIDDLEWARE = [
@@ -59,6 +62,7 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
+            "string_if_invalid": "WARNING: {{%s}} not a valid context variable",
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -116,7 +120,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-#STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/' # note: no leading slash!
 
