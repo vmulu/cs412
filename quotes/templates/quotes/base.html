@@ -1,0 +1,34 @@
+<!-- File: templates/quotes/base.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/9/2025
+    Description: Base html file that other html files will include -->
+
+{% load static %}
+<html>
+    <head>
+        <title> Lebron James Quotes</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <h1>Lebron James Quote of the Day</h1>
+    </head>
+    <body>
+        <nav>
+            <li>
+                <a href="{% url 'about_page' %}">About</a>
+            </li>
+            <li>
+                <a href="{% url 'show_all' %}">Show All</a>
+            </li>
+            <li>
+                <a href="{% url 'quote_page' %}">Quote of the Day</a>
+            </li>
+        </nav>
+
+        {% block content %}
+        {% endblock%}
+        
+        <footer>
+            Page created by vmulu@bu.edu
+            <br>
+            Generated at {{time}}
+        </footer>
+    </body>
+</html>

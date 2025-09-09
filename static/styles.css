@@ -8,9 +8,43 @@ h1,h2,h3,h4,h5{
     font-weight: normal;
     background: aliceblue;
     margin: 0;
+    text-align: center;
+}
+
+p {
+    color: black;
+    text-align: center;
 }
 
 a, a:visited{
     color: slategray;
     text-decoration: none;
+}
+
+footer { 
+    grid-column: span 6;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+nav {
+    padding: 30px;
+    border-right: 1px solid #ddd;
+    align-items: top;
+    text-align: center;
+    color: blue;
+}
+
+nav li {
+    text-decoration: underline;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: auto;
 }

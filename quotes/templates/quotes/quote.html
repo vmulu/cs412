@@ -1,0 +1,13 @@
+<!-- File: templates/quotes/quote.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/9/2025
+    Description: Presenting the randomized quote and image -->
+
+{% extends 'quotes/base.html' %}
+    {% block content %}
+
+    <p>
+       {{ rand_quote }}
+    </p>
+    <img src="{{ rand_img }}" alt="Random image of Lebron James">
+
+{% endblock %}

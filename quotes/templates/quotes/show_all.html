@@ -1,0 +1,23 @@
+<!-- File: templates/quotes/show_all.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/9/2025
+    Description: Presenting all the quotes and images -->
+
+{% extends 'quotes/base.html' %}
+    {% block content %}
+    <h1>
+        All quotes by Lebron James
+    </h1>
+    
+    <p>{{ q1 }}</p>
+    <p>{{ q2 }}</p>
+    <p> {{ q3 }}</p>
+
+    <h2>
+        All images of Lebron James 
+    </h2>
+
+    <img src="{{ img1 }}" alt="Image of Lebron James">
+    <img src="{{ img2 }}" alt="Image of Lebron James">
+    <img src="{{ img3 }}" alt="Image of Lebron James">
+
+{% endblock %}
