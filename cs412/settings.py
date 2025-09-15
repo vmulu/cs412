@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hw', # from example vid
     'quotes',
+    'formdata', # from example vid
 ]
 
 MIDDLEWARE = [
