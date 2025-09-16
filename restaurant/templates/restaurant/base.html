@@ -1,0 +1,29 @@
+<!-- File: restaurant/templates/restaurant/base.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/16/2025
+    Description: Base html file that other html files will include -->
+
+    {% load static %}
+    <html>
+        <head>
+            <title> Victoria's Restaurant</title>
+            <link rel="stylesheet" href="{% static 'styles.css' %}">
+            <h1>Victoria's Restaurant</h1>
+        </head>
+        <body>
+            <nav>
+                <li>
+                    <a href="{% url 'main_page' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'order_page' %}">Order</a>
+                </li>
+            </nav>
+
+            {% block content %}
+            {% endblock%}
+
+            <footer>
+                Page created by vmulu@bu.edu
+            </footer>
+        </body>
+    </html>

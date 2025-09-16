@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'hw', # from example vid
     'quotes',
     'formdata', # from example vid
+    'restaurant',
 ]
 
 MIDDLEWARE = [
