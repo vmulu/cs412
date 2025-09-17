@@ -14,13 +14,22 @@
         {% csrf_token %}
 
         <!-- daily special -->
-         
+
+        <p>
+            !!! Our Daily Special Today !!!
+        </p>
+        <p>
+            {{daily_special}}
+        </p>
 
         <!-- The form must include a space to include special instructions,
         and fields to collect customer information (name, phone, email) -->
         Name: <input type="text" name="name">
+        <br>
         Phone Number: <input type="text" name="number">
+        <br>
         Email <input type="text" name="email">
+        <br>
         <input type="submit">
     </form>
 

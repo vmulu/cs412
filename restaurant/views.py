@@ -7,6 +7,20 @@ import random
 
 # Create your views here.
 
+# daily special items that are picked at random
+daily_special = [
+    'Crazy Cheeseburger Meal',
+    'Lazy Lasagna',
+    'Corn on the Cob'
+]
+
+# standard menu items
+menu_item = [
+    'Chicken Finger Meal',
+    'Tomato Basil Soup',
+    'Cheese Pizza'
+]
+
 def main_page(request):
     """
     view for the main page
@@ -23,9 +37,14 @@ def order_page(request):
 
     template_name = 'restaurant/order_page.html'
 
-    # add work
+    context = {
+        'daily_special': random.choice(daily_special),
+        'menu_item_one': menu_item[0],
+        'menu_item_two': menu_item[1],
+        'menu_item_three': menu_item[2]
+    }
 
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 def confirmation_page(request):
     """
