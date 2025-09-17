@@ -10,4 +10,18 @@
         Place your order here!
     </h1>
 
+    <form action="{% url 'confirmation_page' %}" method="POST">
+        {% csrf_token %}
+
+        <!-- daily special -->
+         
+
+        <!-- The form must include a space to include special instructions,
+        and fields to collect customer information (name, phone, email) -->
+        Name: <input type="text" name="name">
+        Phone Number: <input type="text" name="number">
+        Email <input type="text" name="email">
+        <input type="submit">
+    </form>
+
 {% endblock %}
