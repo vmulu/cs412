@@ -9,17 +9,22 @@ import random
 
 # daily special items that are picked at random
 daily_special = [
-    'Crazy Cheeseburger Meal',
-    'Lazy Lasagna',
-    'Corn on the Cob'
+    'Crazy Cheeseburger Meal $12.00',
+    'Lazy Lasagna $23.10',
+    'Corn on the Cob $2.30'
 ]
 
 # standard menu items
-menu_item = [
-    'Chicken Finger Meal',
-    'Tomato Basil Soup',
-    'Cheese Pizza'
-]
+menu_item = {
+    'Chicken Finger Meal' : 5.20,
+    'Tomato Basil Soup' : 6.40,
+    'Cheese Pizza' : 10.20,
+    'Crazy Cheeseburger Meal' : 12.00,
+    'Lazy Lasagna' : 23.10,
+    'Corn on the Cob' : 2.30,
+    'Extra Cheese' : 1.00
+}
+
 
 def main_page(request):
     """
@@ -37,11 +42,14 @@ def order_page(request):
 
     template_name = 'restaurant/order_page.html'
 
+    menu_items = list(menu_item.keys())
+
     context = {
         'daily_special': random.choice(daily_special),
-        'menu_item_one': menu_item[0],
-        'menu_item_two': menu_item[1],
-        'menu_item_three': menu_item[2]
+        'menu_item_one': menu_items[0],
+        'menu_item_two': menu_items[1],
+        'menu_item_three': menu_items[2],
+        'extra': menu_items[6]
     }
 
     return render(request, template_name, context)
@@ -51,7 +59,20 @@ def confirmation_page(request):
     the view to process the submission of an order, and display a confirmation page.
     """
     template_name = 'restaurant/confirmation_page.html'
+    print(request.POST)
 
-    # add work
+    if request.POST:
+        name = request.POST['name']
+        number = request.POST['number']
+        email = request.POST['email']
+        total_food = request.POST.getlist('food')
 
-    return render(request, template_name)
+        context = {
+            'name': name,
+            'number': number,
+            'email': email,
+            'food': total_food,
+        }
+
+
+    return render(request, template_name, context)

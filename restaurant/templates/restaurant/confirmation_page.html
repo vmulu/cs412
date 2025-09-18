@@ -6,7 +6,38 @@
     {% block content %}
 
     <h1>
-        This is what your ordered!
+        Confirmation
     </h1>
+
+    <p>
+        Thank you for your order!
+    </p>
+
+    <!-- confirmation -->
+    <div>
+        <h2>
+            Your order is confirmed:
+        </h2>
+        <ul>
+            {% for item in food %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- customer information -->
+    <div>
+        <h2>
+            Customer Information:
+        </h2>
+        <p>
+            {{name}}
+            <br>
+            {{number}}
+            <br>
+            {{email}}
+        </p>
+
+    </div>
 
 {% endblock %}
