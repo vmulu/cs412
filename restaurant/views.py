@@ -74,7 +74,6 @@ def confirmation_page(request):
 
         special_instructions = request.POST['special_instructions']
 
-        # fix for daily special
         total_price = 0
         for item in total_food:
             total_price += menu_item[item]
