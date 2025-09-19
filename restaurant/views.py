@@ -2,27 +2,29 @@
 # Author: Victoria Mulugeta (vmulu@bu.edu), 9/16/2025
 # Description: Is called by url.py and respond to request generating the UI
 
+from datetime import timedelta
 from django.shortcuts import render
 import random
+from django.utils import timezone
 
 # Create your views here.
 
 # daily special items that are picked at random
 daily_special = [
-    'Crazy Cheeseburger Meal $12.00',
-    'Lazy Lasagna $23.10',
-    'Corn on the Cob $2.30'
+    'Crazy Cheeseburger Meal $12',
+    'Lazy Lasagna $23',
+    'Corn on the Cob $2'
 ]
 
 # standard menu items
 menu_item = {
-    'Chicken Finger Meal' : 5.20,
-    'Tomato Basil Soup' : 6.40,
-    'Cheese Pizza' : 10.20,
-    'Crazy Cheeseburger Meal' : 12.00,
-    'Lazy Lasagna' : 23.10,
-    'Corn on the Cob' : 2.30,
-    'Extra Cheese' : 1.00
+    'Chicken Finger Meal' : 5,
+    'Tomato Basil Soup' : 6,
+    'Cheese Pizza' : 10,
+    'Crazy Cheeseburger Meal $12' : 12,
+    'Lazy Lasagna $23' : 23,
+    'Corn on the Cob $2' : 2,
+    'Extra Cheese' : 1
 }
 
 
@@ -66,12 +68,25 @@ def confirmation_page(request):
         number = request.POST['number']
         email = request.POST['email']
         total_food = request.POST.getlist('food')
+        random_min = random.randint(30, 60)
+        current_time = timezone.now()
+        ready_time = current_time + timedelta(minutes=random_min)
+
+        special_instructions = request.POST['special_instructions']
+
+        # fix for daily special
+        total_price = 0
+        for item in total_food:
+            total_price += menu_item[item]
 
         context = {
             'name': name,
             'number': number,
             'email': email,
             'food': total_food,
+            'ready_time': ready_time,
+            'total_price': total_price,
+            'special_instructions' : special_instructions
         }
 
 

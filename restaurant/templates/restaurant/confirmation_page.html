@@ -13,6 +13,12 @@
         Thank you for your order!
     </p>
 
+    <!-- order time -->
+    <div>
+        <p>
+            Your order will be ready at {{ready_time}}
+        </p>
+    </div>
     <!-- confirmation -->
     <div>
         <h2>
@@ -24,6 +30,23 @@
             {% endfor %}
         </ul>
     </div>
+
+    <!-- food total -->
+    <div>
+        <p>
+            Total Price: $ {{total_price}}
+        </p>
+    </div>
+
+    <!-- special instruction -->
+     <div>
+        {% if special_instructions %}
+            <h2>
+                Special Instructions:
+            </h2>
+            {{special_instructions}}
+        {% endif %}
+     </div>
 
     <!-- customer information -->
     <div>
