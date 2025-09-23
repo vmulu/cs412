@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'formdata', # from example vid
     'restaurant',
     'blog', # from example vid
+    'mini_insta',
 ]
 
 MIDDLEWARE = [
