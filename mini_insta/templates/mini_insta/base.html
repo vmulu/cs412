@@ -3,27 +3,28 @@
 <html>
     <head>
         <title> MiniInsta </title>
-        <link rel="stylesheet" href="{% static 'mini_insta-styles.css' %}">
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
     </head>
 
     <body>
         <head>
-            <!-- <h1>
-                My Blog
+            <h1>
+                MiniInsta
             </h1>
             <nav>
                 <ul>
                     <li>
-                        <a href="{% url 'random'%}"> Random </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'show_all'%}"> Show All </a>
+                        <a href="{% url 'show_all_profiles'%}"> All Profiles </a>
                     </li>
                 </ul>
-            </nav> -->
+            </nav>
         </head>
 
         {% block content %}
         {% endblock %}
     </body>
+
+    <footer>
+        Page created by vmulu@bu.edu
+    </footer>
 </html>
