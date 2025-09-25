@@ -1,11 +1,8 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-<h1>
-    {{profile.username}}
-</h1>
 
-<div>
+<div class="profile-container">
 
     <div>
         <h2>
@@ -14,8 +11,13 @@
         <h3>
             {{profile.display_name}}
         </h3>
-
         <img src="{{profile.profile_image_url}}" alt="">
+        <p>
+            Joined <strong>MiniInsta</strong> on {{profile.join_date}}
+        </p>
+        <p>
+            {{profile.bio_text}}
+        </p>
     </div>
     <hr>
 
