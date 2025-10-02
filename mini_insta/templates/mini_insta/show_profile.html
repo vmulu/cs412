@@ -22,6 +22,21 @@
     </div>
     <hr>
 
+    <div class="posts">
+        <!-- for all the post associated with this profile get this fist photo-->
+        {% for post in profile.get_all_posts %}
+        <div class="post">
+            {% with post.get_all_photos.first as photo %}
+                {% if photo %}
+                    <a href="{% url 'post' post.pk %}"> <img src="{{ photo.image_url }}" alt="Photo for {{ post.profile }}"> </a>
+                {% else %}
+                    <a href="{% url 'post' post.pk %}"> <img src="https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" alt="No image available"> </a>
+                {% endif %}
+            {% endwith %}
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 
 {% endblock %}

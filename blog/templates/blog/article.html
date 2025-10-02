@@ -21,6 +21,27 @@
             {{article.text}}
         </p>
         <img src="{{article.image_url}}" alt="">
+
+        <!-- display comments  -->
+        <!-- {{article.get_all_comments}} -->
+        <div>
+            <h2>
+                Comments
+            </h2>
+            <h3>
+                <a href="{% url 'create_comment' article.pk %}"> Create a Comments</a>
+            </h3>
+
+            {% for comment in article.get_all_comments %}
+                <div>
+                    <strong>by {{comment.author}} at {{comment.published}}</strong>
+                    <p>
+                        {{comment.text}}
+                    </p>
+                </div>
+            {% endfor %}
+
+        </div>
     </div>
     <hr>
 

@@ -23,6 +23,13 @@
 
         {% block content %}
         {% endblock %}
+
+        <div class="create-post">
+            {% if profile %}
+            <a href="{% url 'create_post' profile.pk %}" >Create Post</a>
+            {% endif %}
+        </div>
+
     </body>
 
     <footer>
