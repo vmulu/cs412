@@ -37,7 +37,7 @@ class PostDetailView(DetailView):
 
 class CreatePostView(CreateView):
     """
-    add docstring
+    View for the creating a post page
     """
 
     form_class = CreatePostForm
@@ -45,7 +45,8 @@ class CreatePostView(CreateView):
 
     def get_context_data(self):
         """
-        add docstring
+        Adds the profile object to the template context based on
+        the `pk` provided in the URL.
         """
         context = super().get_context_data()
         pk = self.kwargs['pk']
@@ -56,6 +57,9 @@ class CreatePostView(CreateView):
         return context
 
     def form_valid(self, form):
+        """
+        Handles the form submission and processes the data.
+        """
         # attaching foreign key and attaching it to the instance
         print(form.cleaned_data)
         pk = self.kwargs['pk']
@@ -73,6 +77,9 @@ class CreatePostView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        """
+        Redirects to the newly created Post's detail page.
+        """
         # return a url of what to do after success
         pk = self.object.pk
         # reverse builds url
