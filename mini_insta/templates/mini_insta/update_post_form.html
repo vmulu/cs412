@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<h4>
+    Update Post
+</h4>
 <form action="{% url 'update_post' post.pk %}"  method = 'POST'>
     {% csrf_token %}
 
