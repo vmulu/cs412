@@ -4,9 +4,9 @@
 
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from . models import Profile, Post, Photo
-from . forms import CreatePostForm
+from . forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 
 # Create your views here.
 
@@ -69,9 +69,15 @@ class CreatePostView(CreateView):
         post = form.save()
 
         # attaching photo to post
-        image_url = self.request.POST.get('image_url')
-        if image_url:
-            photo = Photo(post=post, image_url=image_url)
+
+        # image_url = self.request.POST.get('image_url')
+        # if image_url:
+        #     photo = Photo(post=post, image_url=image_url)
+        #     photo.save()
+
+        files = self.request.FILES.getlist('files')
+        for file in files:
+            photo = Photo(post=post, image_file=file)
             photo.save()
 
         return super().form_valid(form)
@@ -84,3 +90,75 @@ class CreatePostView(CreateView):
         pk = self.object.pk
         # reverse builds url
         return reverse('post', kwargs={'pk': pk})
+
+class UpdateProfileView(UpdateView):
+    '''A view to update an profile and save it to the database.'''
+
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = "mini_insta/update_profile_form.html"
+
+    def form_valid(self, form):
+        '''
+        Handle the form submission to create a new profile object.
+        '''
+        print(f'UpdateProfileView: form.cleaned_data={form.cleaned_data}')
+
+        return super().form_valid(form)
+
+class DeletePostView(DeleteView):
+    """
+    A view to delete a comment and remove it from the database.
+    """
+
+    model = Post
+    template_name = 'mini_insta/delete_post_form.html'
+
+    def get_context_data(self, **kwarg):
+        """
+        will provide the context data needed to support the delete_post_form.html
+        """
+        context = super().get_context_data(**kwarg)
+        pk = self.kwargs['pk']
+
+        # get post
+        post = Post.objects.get(pk=pk)
+
+        # get profile
+        profile = post.profile
+
+        context['post'] = post
+        context['profile'] = profile
+        return context
+
+    def get_success_url(self):
+        """
+        Redirects to the Profile
+        """
+        # return a url of what to do after success
+        pk = self.object.profile.pk
+        # reverse builds url
+        return reverse('profile', kwargs={'pk': pk})
+
+class UpdatePostView(UpdateView):
+    """
+    A view to update an post and save it to the database.
+    """
+
+    model = Post
+    template_name = "mini_insta/update_post_form.html"
+    form_class = UpdatePostForm
+
+    def form_valid(self, form):
+        '''
+        Handle the form submission to create a new post object.
+        '''
+        print(f'UpdatePostView: form.cleaned_data={form.cleaned_data}')
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        """
+        Redirect to the post detail page after updating.
+        """
+        return reverse('post', kwargs={'pk': self.object.pk})

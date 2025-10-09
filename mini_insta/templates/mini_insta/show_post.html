@@ -7,7 +7,7 @@
     {% for photo in post.get_all_photos %}
         <table>
             <li>
-                <img src="{{ photo.image_url }}" alt="Photo for {{ post.profile }}">
+                <img src="{{ photo.get_image_url }}" alt="Photo for {{ post.profile }}">
             </li>
         </table>
     {% endfor %}
@@ -18,6 +18,12 @@
     <p>
         posted at {{ post.timestamp }}
     </p>
+    <div>
+        <a href="{% url 'delete_post' post.pk %}"> Delete Post</a>
+    </div>
+    <div>
+        <a href="{% url 'update_post' post.pk %}"> Update Post</a>
+    </div>
 
 </div>
 

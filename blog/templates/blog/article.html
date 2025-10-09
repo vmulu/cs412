@@ -20,8 +20,16 @@
         <p>
             {{article.text}}
         </p>
-        <img src="{{article.image_url}}" alt="">
-
+        <!-- updated image file -->
+        <p>
+            <a href="{% url 'update_article' article.pk %}">Update this article</a>
+        </p>
+        <!-- <img src="{{article.image_url}}" alt=""> -->
+        {% if article.image_file %}
+            <img src="{{article.image_file.url}}" alt="">
+        {% else %}
+            <p> no image </p>
+        {% endif %}
         <!-- display comments  -->
         <!-- {{article.get_all_comments}} -->
         <div>
@@ -38,6 +46,7 @@
                     <p>
                         {{comment.text}}
                     </p>
+                    <a href="{% url 'delete_comment' comment.pk %}"> delete comment</a>
                 </div>
             {% endfor %}
 

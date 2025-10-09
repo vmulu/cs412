@@ -3,6 +3,7 @@
 # Description: Defines the data models for the Django application.
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -26,6 +27,12 @@ class Profile(models.Model):
         """
         posts = Post.objects.filter(profile=self)
         return posts
+
+    def get_absolute_url(self):
+        """
+        returns the URL corresponding to the Profile
+        """
+        return reverse('profile', kwargs={'pk': self.pk})
 
 class Post(models.Model):
     """
@@ -54,6 +61,24 @@ class Photo(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
+    image_file = models.ImageField(blank=True)
 
     def __str__(self):
-        return f'comment for {self.post} at {self.timestamp}'
+        if self.image_url:
+            image_source = self.image_url
+        elif self.image_file:
+            image_source = self.image_file.url
+        else:
+            image_source = "No image available"
+
+        return f'photo for {self.post} image URL: {image_source}'
+
+    def get_image_url(self):
+        """
+        Returns the URL to the image, will either be the URL stored in the
+        image_url attribute (if it exists), or else the URL to the image_file attribute
+        """
+        if self.image_url:
+            return self.image_url
+        else:
+            return self.image_file.url
