@@ -1,0 +1,15 @@
+<!-- mini_insta/templates/mini_insta/show_following.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <h1>
+        Following
+    </h1>
+    <div>
+        {% for following in profile.get_following %}
+            {{following.username}}
+        {% endfor %}
+    </div>
+
+{% endblock %}

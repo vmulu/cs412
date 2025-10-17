@@ -15,6 +15,16 @@
             <nav>
                 <ul>
                     <li>
+                        {% if profile %}
+                            <a href="{% url 'feed' profile.pk %}" >Home</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if profile %}
+                            <a href="{% url 'search' profile.pk %}" >Search</a>
+                        {% endif %}
+                    </li>
+                    <li>
                         <a href="{% url 'show_all_profiles'%}"> All Profiles </a>
                     </li>
                 </ul>
@@ -26,7 +36,7 @@
 
         <div class="create-post">
             {% if profile %}
-            <a href="{% url 'create_post' profile.pk %}" >Create Post</a>
+                <a href="{% url 'create_post' profile.pk %}" >Create Post</a>
             {% endif %}
         </div>
 

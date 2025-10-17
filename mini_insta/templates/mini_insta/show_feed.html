@@ -1,0 +1,60 @@
+<!-- mini_insta/templates/mini_insta/show_feed.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <h1>
+        {{ profile.username }}'s Feed
+    </h1>
+    <p>
+        <a href="{% url 'profile' profile.pk %}">Back to Profile</a>
+    </p>
+    {% for post in profile.get_post_feed %}
+        <!-- posts -->
+        <h2>
+            <img src="{{post.profile.profile_image_url}}" alt="">
+            {{post.profile.username}}
+        </h2>
+
+        <div class="post">
+            {% with post.get_all_photos.first as photo %}
+                {% if photo %}
+                    <a href="{% url 'post' post.pk %}"> <img src="{{ photo.get_image_url }}" alt="Photo for {{ post.profile }}"> </a>
+                {% else %}
+                    <a href="{% url 'post' post.pk %}"> <img src="https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" alt="No image available"> </a>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <p>
+            {{ post.caption }}
+        </p>
+        <p>
+            posted at {{ post.timestamp }}
+        </p>
+        <!-- comments and likes -->
+        <div>
+            <p>
+                {{post.get_all_comments.count}} Comments:
+            </p>
+            {% for comment in post.get_all_comments %}
+                <div>
+                    <strong>{{comment.profile.username}}</strong>
+                    <p>
+                        {{comment.text}}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <p>
+                {{post.get_likes.count}} Likes:
+            </p>
+            {% for like in post.get_likes %}
+            <div>
+                <strong>{{like.profile.username}}</strong>
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

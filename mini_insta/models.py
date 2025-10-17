@@ -34,6 +34,60 @@ class Profile(models.Model):
         """
         return reverse('profile', kwargs={'pk': self.pk})
 
+    def get_followers(self):
+        """
+        returns how many followers this instance has
+        """
+        followers = Follow.objects.filter(profile=self)
+        followers_lst = []
+
+        for follow in followers:
+            followers_lst.append(follow.follower_profile)
+
+        return followers_lst
+
+    def get_num_followers(self):
+        """
+        return the count of followers.
+        """
+
+        followers_lst = self.get_followers()
+
+        return len(followers_lst)
+
+    def get_following(self):
+        """
+        return a list of those Profiles followed by this profile
+        """
+        following = Follow.objects.filter(follower_profile=self)
+        following_lst = []
+
+        for follow in following:
+            following_lst.append(follow.profile)
+
+        return following_lst
+
+    def get_num_following(self):
+        """
+        return the count of how many profiles are being followed.
+        """
+
+        following_lst = self.get_following()
+
+        return len(following_lst)
+
+    def get_post_feed(self):
+        """
+        will return a list (or QuerySet) of Posts specifically for the profiles
+        being followed by the profile
+        """
+        posts = []
+        for profile in self.get_following():
+            for post in profile.get_all_posts():
+                posts.append(post)
+
+        return posts
+
 class Post(models.Model):
     """
     Represents a user's post on their profile
@@ -52,6 +106,20 @@ class Post(models.Model):
         """
         photos = Photo.objects.filter(post=self).order_by('timestamp')
         return photos
+
+    def get_all_comments(self):
+        """
+        retrieves all comments on a Post
+        """
+        comments = Comment.objects.filter(post=self)
+        return comments
+
+    def get_likes(self):
+        """
+        retrieve all likes on a Post
+        """
+        likes = Like.objects.filter(post=self)
+        return likes
 
 class Photo(models.Model):
     """
@@ -82,3 +150,42 @@ class Photo(models.Model):
             return self.image_url
         else:
             return self.image_file.url
+
+class Follow(models.Model):
+    """
+    encapsulates the idea of an edge connecting two nodes within the social network
+    """
+
+    # indicating which profile is being followed
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile")
+    # indicating which profile is doing the following
+    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.follower_profile.display_name} follows {self.profile.display_name}'
+
+class Comment(models.Model):
+    """
+    encapsulates the idea of one Profile providing a response or commentary on a Post
+    """
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=False)
+
+    def __str__(self):
+        return f"{self.profile.username} commented on {self.post.profile}'s post"
+
+class Like(models.Model):
+    """
+    encapsulates the idea of one Profile providing approval of a Post
+    """
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.profile.username} likes {self.post.profile.username} post'

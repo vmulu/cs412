@@ -1,0 +1,19 @@
+<!-- mini_insta/templates/mini_insta/search.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <h1>
+      Search
+    </h1>
+    <div>
+        <form method="GET">
+            <p>
+                Search for users or posts: <input type="text" name="query">
+                <button type="submit">Search</button>
+            </p>
+        </form>
+
+    </div>
+
+{% endblock %}

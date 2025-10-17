@@ -19,6 +19,29 @@
         posted at {{ post.timestamp }}
     </p>
     <div>
+        <p>
+            {{post.get_all_comments.count}} Comments:
+        </p>
+        {% for comment in post.get_all_comments %}
+            <div>
+                <strong>{{comment.profile.username}}</strong>
+                <p>
+                    {{comment.text}}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+    <div>
+        <p>
+            {{post.get_likes.count}} Likes:
+        </p>
+        {% for like in post.get_likes %}
+        <div>
+            <strong>{{like.profile.username}}</strong>
+        </div>
+    {% endfor %}
+    </div>
+    <div>
         <a href="{% url 'delete_post' post.pk %}"> Delete Post</a>
     </div>
     <div>

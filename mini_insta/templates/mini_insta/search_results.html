@@ -1,0 +1,54 @@
+<!-- mini_insta/templates/mini_insta/search_results.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <h1>
+        Search Results for "{{ query }}"
+    </h1>
+    <!-- profiles -->
+    <div>
+        <h2>Profiles that match your search:</h2>
+        {% if profiles %}
+            <div>
+                {% for profile in profiles %}
+                    <div>
+                        <a href="{% url 'profile' profile.pk %}">
+                            <img src="{{ profile.profile_image_url }}" alt="image for {{ profile.display_name }}">
+                        </a>
+                        <strong><a href="{% url 'profile' profile.pk %}">{{ profile.display_name }}</a></strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No profiles found</p>
+        {% endif %}
+    </div>
+    <!-- posts -->
+     <div>
+        <h2>Posts that match your search:</h2>
+        {% if posts %}
+            {% for post in posts %}
+                <div>
+                    <a href="{% url 'post' post.pk %}">
+                    {% with post.get_all_photos.first as first%}
+                        {% if first %}
+                            <img src="{{ first.get_image_url }}" alt="img for post">
+                        {% else %}
+                            <img src="https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" alt="No image available">
+                        {% endif %}
+                    {% endwith %}
+                    </a>
+                    <div>
+                        <p>
+                            <strong><a href="{% url 'profile' post.profile.pk %}">{{ post.profile.display_name }}</a>:</strong> {{ post.caption }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No posts found matching your search.</p>
+        {% endif %}
+     </div>
+
+{% endblock %}

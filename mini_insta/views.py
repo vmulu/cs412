@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from . models import Profile, Post, Photo
 from . forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -162,3 +163,94 @@ class UpdatePostView(UpdateView):
         Redirect to the post detail page after updating.
         """
         return reverse('post', kwargs={'pk': self.object.pk})
+
+class ShowFollowersDetailView(DetailView):
+    """
+    provide the context variable profile to the show followers template
+    """
+
+    model = Profile
+    template_name = "mini_insta/show_followers.html"
+    context_object_name = "profile"
+
+class ShowFollowingDetailView(DetailView):
+    """
+    provide the context variable profile to the show following template
+    """
+
+    model = Profile
+    template_name = "mini_insta/show_following.html"
+    context_object_name = "profile"
+
+class PostFeedListView(ListView):
+    """
+    View for our feed page
+    """
+
+    model = Post
+    template_name = "mini_insta/show_feed.html"
+    context_object_name = "posts"
+
+    def get_context_data(self):
+        """
+        Adds the profile object to the template context based on
+        the `pk` provided in the URL.
+        """
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+
+        context['profile'] = profile
+
+        return context
+
+class SearchView(ListView):
+    """
+    View for our search engine
+    """
+
+    model = Profile
+    template_name = "mini_insta/search_results.html"
+    context_object_name = "profile"
+
+    def get_context_data(self):
+        """
+        Adds the profile object to the template context based on
+        the `pk` provided in the URL.
+        """
+        context = super().get_context_data()
+        query = self.request.GET.get("query")
+
+        if query:
+            context['query'] = query
+            context['profiles'] = Profile.objects.filter(
+                Q(username__icontains=query) |
+                Q(display_name__icontains=query) |
+                Q(bio_text__icontains=query)
+            )
+            context['posts'] = Post.objects.filter(caption__icontains=query)
+
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        """overrides the super method to handle any request"""
+
+        if 'query' not in request.GET:
+            profile = Profile.objects.get(pk=self.kwargs['pk'])
+            return render(request, 'mini_insta/search.html', {'profile': profile})
+        else:
+            return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        """
+        obtains the QuerySet of instance data
+        """
+
+        query = self.request.GET.get("query")
+
+        if not query:
+            return Post.objects.none()
+
+        return Post.objects.filter(caption__icontains=query)
