@@ -247,6 +247,7 @@ class SearchView(ListView):
         """
         obtains the QuerySet of instance data
         """
+        # testing
 
         query = self.request.GET.get("query")
 
