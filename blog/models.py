@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User # new to add fk to a user
 
 # Create your models here.
 
@@ -10,6 +11,7 @@ class Article(models.Model):
     published = models.DateTimeField(auto_now=True)
     #image_url = models.URLField(blank=True)
     image_file = models.ImageField(blank=True) # an actual image
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # attaching fk to a user
 
     def __str__(self):
         return f'{self.title} by {self.author}'

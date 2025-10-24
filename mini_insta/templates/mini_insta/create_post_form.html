@@ -1,4 +1,11 @@
 <!-- mini_insta/templates/mini_insta/create_post_form.html -->
+<!--
+    File: mini_insta/templates/mini_insta/create_post_form.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/23/2025
+    Description: Template for creating a new post within the Mini Insta application.
+-->
+
+
 
 {% extends 'mini_insta/base.html' %}
 
@@ -8,7 +15,7 @@
     Create a Post
 </h1>
 
-<form action="{% url 'create_post' profile.pk %}" method=POST enctype="multipart/form-data">
+<form action="{% url 'create_post'%}" method=POST enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{form.as_table}}

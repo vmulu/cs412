@@ -196,3 +196,14 @@ footer {
     margin-top: 10px;
 }
 
+button,
+input[type="submit"] {
+  background-color: pink;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}

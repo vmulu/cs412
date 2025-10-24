@@ -39,3 +39,17 @@ class UpdatePostForm(forms.ModelForm):
         fields = [
             'caption',
         ]
+
+class CreateProfileForm (forms.ModelForm):
+    """
+    form for creating a profile
+    """
+
+    class Meta:
+        model = Profile
+        fields = [
+            'username',
+            'display_name',
+            'bio_text',
+            'profile_image_url'
+        ]

@@ -1,4 +1,10 @@
 <!-- mini_insta/templates/mini_insta/show_following.html -->
+ <!-- 
+    File: mini_insta/templates/mini_insta/show_following.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/23/2025
+    Description: Displays all profiles followed by a given user.
+-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
@@ -8,7 +14,7 @@
     </h1>
     <div>
         {% for following in profile.get_following %}
-            {{following.username}}
+            <a href="{% url 'profile' following.pk%}"> {{following.username}} </a>
         {% endfor %}
     </div>
 

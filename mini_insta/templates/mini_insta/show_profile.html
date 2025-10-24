@@ -1,4 +1,10 @@
 <!-- mini_insta/templates/mini_insta/show_profile.html -->
+ <!-- 
+    File: mini_insta/templates/mini_insta/show_profile.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/23/2025
+    Description: Displays a user's profile page, including bio, posts, and follow options.
+-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
@@ -19,6 +25,21 @@
         <p>
             {{profile.bio_text}}
         </p>
+    </div>
+    <div>
+        {% if request.user.is_authenticated and profile != current_profile %}
+            {% if profile in current_profile.get_following %}
+                <form action="{% url 'delete_follow' profile.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Unfollow">
+                </form>
+            {% else %}
+                <form action="{% url 'follow_profile' profile.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Follow">
+                </form>
+            {% endif %}
+        {% endif %}
     </div>
     <div>
         <div>
@@ -43,12 +64,14 @@
         {% endfor %}
     </div>
 
-    <div>
-        <!-- updating profile -->
-        <p>
-            <a href="{% url 'update_profile' profile.pk %}">Update this profile</a>
-        </p>
-    </div>
+    {% if request.user == profile.user %}
+        <div>
+            <!-- updating profile -->
+            <p>
+                <a href="{% url 'update_profile' %}">Update this profile</a>
+            </p>
+        </div>
+    {% endif %}
 
 </div>
 

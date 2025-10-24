@@ -1,0 +1,27 @@
+<!-- mini_insta/templates/login.html -->
+<!--
+    File: mini_insta/templates/mini_insta/login.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/23/2025
+    Description: Login page template for user authentication.
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <h1>Login</h1>
+    <form method="POST" action="{% url 'login' %}" >
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Login">
+
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{request.GET.next}}">
+        {% else %}
+            <input type="hidden" name="next" value="{% url 'show_all_profiles' %}">
+        {% endif %}
+    </form>
+    <p>
+        Don't have an profile? <a href="{% url 'create_profile' %}">Register here</a>.
+    </p>
+{% endblock %}

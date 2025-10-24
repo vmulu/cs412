@@ -1,4 +1,10 @@
 <!-- mini_insta/templates/mini_insta/show_post.html -->
+ <!-- 
+    File: mini_insta/templates/mini_insta/show_post.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/23/2025
+    Description: Displays an individual post, including likes and comments.
+-->
+
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
@@ -18,6 +24,22 @@
     <p>
         posted at {{ post.timestamp }}
     </p>
+    </div>
+    {% if current_profile != post.profile %}
+        {% if is_liked %}
+            <form action="{% url 'delete_like' post.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Unlike">
+            </form>
+        {% else %}
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Like">
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <div>
     <div>
         <p>
             {{post.get_all_comments.count}} Comments:
@@ -30,8 +52,6 @@
                 </p>
             </div>
         {% endfor %}
-    </div>
-    <div>
         <p>
             {{post.get_likes.count}} Likes:
         </p>
@@ -41,12 +61,14 @@
         </div>
     {% endfor %}
     </div>
-    <div>
-        <a href="{% url 'delete_post' post.pk %}"> Delete Post</a>
-    </div>
-    <div>
-        <a href="{% url 'update_post' post.pk %}"> Update Post</a>
-    </div>
+    {% if request.user == post.profile.user %}
+        <div>
+            <a href="{% url 'delete_post' post.pk %}"> Delete Post</a>
+        </div>
+        <div>
+            <a href="{% url 'update_post' post.pk %}"> Update Post</a>
+        </div>
+    {% endif%}
 
 </div>
 

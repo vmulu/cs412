@@ -1,0 +1,23 @@
+<!-- blog/templates/base.html -->
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<!-- This basic authentication form works.
+- need to set "next" to redirect to correct page.
+-->
+
+    <h1>Login</h1>
+    <form method="POST" action="{% url 'login' %}" >
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Login">
+
+        <!-- if some next url is given then go there if not then just go to show_all page -->
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{request.GET.next}}">
+        {% else %}
+            <input type="hidden" name="next" value="{% url 'show_all' %}">
+        {% endif %}
+    </form>
+    Don't have an account? <a href="{% url 'register' %}">Register here</a>.
+{% endblock %}

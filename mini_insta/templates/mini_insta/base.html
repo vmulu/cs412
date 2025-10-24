@@ -1,4 +1,10 @@
 <!-- mini_insta/templates/mini_insta/base.html -->
+ <!--
+    File: mini_insta/templates/mini_insta/base.html
+    Author: Victoria Mulugeta (vmulu@bu.edu), 9/23/2025
+    Description: Base template for the Django application.
+-->
+
 {% load static %}
 
 <html>
@@ -15,30 +21,47 @@
             <nav>
                 <ul>
                     <li>
-                        {% if profile %}
-                            <a href="{% url 'feed' profile.pk %}" >Home</a>
-                        {% endif %}
+                        <a href="{% url 'feed' %}" >Feed</a>
                     </li>
                     <li>
-                        {% if profile %}
-                            <a href="{% url 'search' profile.pk %}" >Search</a>
-                        {% endif %}
+                        <a href="{% url 'search' %}" >Search</a>
                     </li>
                     <li>
                         <a href="{% url 'show_all_profiles'%}"> All Profiles </a>
                     </li>
+                    <!-- login logout & only access for logged in users -->
+                    {% if request.user.is_authenticated %}
+                        <!-- had to do form bc of django update -->
+                        <li>
+                            <a href="{% url 'profile' %}"> Profile</a>
+                        </li>
+                        <form action="{% url 'logout' %}" method="POST">
+                            {% csrf_token %}
+                            <li><input type="submit" value="Logout"></li>
+                        </form>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Log in</a></li>
+                    {% endif %}
                 </ul>
             </nav>
+            <!-- checking if user is logged in -->
+            {% if request.user.is_authenticated %}
+                Logged in user: {{ request.user }}.
+            {% else %}
+                Not logged in.
+            {% endif %}
         </head>
 
         {% block content %}
         {% endblock %}
 
-        <div class="create-post">
-            {% if profile %}
-                <a href="{% url 'create_post' profile.pk %}" >Create Post</a>
-            {% endif %}
-        </div>
+        {% if request.user == profile.user %}
+            <div>
+                {% if profile %}
+                    <a href="{% url 'create_post'%}" >Create Post</a>
+                {% endif %}
+            </div>
+        {% endif %}
 
     </body>
 
