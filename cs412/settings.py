@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'restaurant',
     'blog', # from example vid
     'mini_insta',
+    'marathon_analytics', # from example video
+    'voter_analytics',
 ]
 
 MIDDLEWARE = [
