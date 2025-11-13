@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'mini_insta',
     'marathon_analytics', # from example video
     'voter_analytics',
+    'dadjokes',
+    'rest_framework', #from class
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,22 @@
+<!--  -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+
+<div>
+    {% for joke in all_jokes %}
+        <br>
+        <a href="{% url 'joke' joke.pk %}">
+            <h2>
+                {{joke.text}}
+            </h2>
+        </a>
+
+        <p>
+            by: {{joke.name}}
+        </p>
+    {% endfor %}
+</div>
+
+{% endblock %}

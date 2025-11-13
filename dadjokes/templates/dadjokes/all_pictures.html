@@ -1,0 +1,15 @@
+<!--  -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+
+<div>
+    {% for pic in all_pics %}
+        <div>
+            <img src="{{pic.image_url}}" alt="pic">
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
