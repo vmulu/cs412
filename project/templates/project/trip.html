@@ -1,0 +1,60 @@
+<!--
+project/templates/project/trip.html
+Victoria Mulugeta vmulu@bu.edu
+Trip page that shows a singular trip information
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <!-- trip -->
+    <div>
+        <h2>
+            {{trip.name}}
+        </h2>
+        <h3>
+            {{trip.start_date}} to {{trip.end_date}}
+        </h3>
+        <p>
+            {{trip.notes}}
+        </p>
+    </div>
+
+    <!-- add if statement when theres none put add list when there is something make it edit list -->
+    <!-- add is packing switch -->
+    <!-- packing list -->
+    <div>
+        <h2>
+            Packing List
+        </h2>
+        <p>
+            {{trip.get_packing_list}}
+        </p>
+
+    </div>
+
+    <!-- destinations -->
+    <div>
+        <h2>
+            Destinations
+        </h2>
+            <div class="profile-grid">
+                {% for destination in trip.get_all_destinations %}
+                    <a href="{% url 'destination' destination.pk %}">
+                        <h2>
+                            {{destination.name}}
+                        </h2>
+                        <h3>
+                            {{destination.arrival_date}} to {{destination.departure_date}}
+                        </h3>
+                    </a>
+                {% endfor %}
+            </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+<!--
+project/templates/project/base.html
+Victoria Mulugeta vmulu@bu.edu
+Base template for the Django application.
+ -->
+
+{% load static %}
+
+<html>
+    <head>
+        <title> Travel Planner </title>
+        <link rel="stylesheet" href="{% static 'mini_insta-styles.css' %}">
+    </head>
+
+    <body>
+        <head>
+            <h1>
+                Travel Planner
+            </h1>
+        </head>
+        {% block content %}
+        {% endblock %}
+    </body>
+
+    <footer>
+        Page created by vmulu@bu.edu
+    </footer>
+</html>

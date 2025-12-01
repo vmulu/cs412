@@ -1,0 +1,36 @@
+<!--
+project/templates/project/destination.html
+Victoria Mulugeta vmulu@bu.edu
+Destination page shows a singular destination information
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <!-- trip name-->
+    <div>
+        <h2>
+            {{destination.trip.name}}
+        </h2>
+    </div>
+
+    <!-- destination info -->
+    <div class="profile-grid">
+        <h2>
+            {{destination.name}}
+        </h2>
+        <h3>
+            {{destination.arrival_date}} to {{destination.departure_date}}
+        </h3>
+        <p>
+            {{destination.notes}}
+        </p>
+    </div>
+
+
+</div>
+
+{% endblock %}

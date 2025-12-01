@@ -1,0 +1,27 @@
+<!--
+project/templates/project/trips.html
+Victoria Mulugeta vmulu@bu.edu
+Trips page that shows all of the users trips
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div class="profile-grid">
+    {% for trip in trips %}
+    <a href="{% url 'trip' trip.pk %}">
+        <div class="all_profiles">
+            <h2>
+                {{trip.name}}
+            </h2>
+            <h3>
+                {{trip.start_date}} to {{trip.end_date}}
+            </h3>
+        </div>
+    </a>
+    <hr>
+    {% endfor %}
+</div>
+
+{% endblock %}
