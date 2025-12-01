@@ -26,14 +26,6 @@ class TripView(DetailView):
     template_name = 'project/trip.html'
     context_object_name = 'trip'
 
-    def get_context_data(self, **kwargs):
-        """
-        Adds destination pk to context
-        """
-        context = super().get_context_data(**kwargs)
-        context["destinations"] = Destination.objects.filter(trip=self.object)
-        return context
-
 class DestinationView(DetailView):
     """
     View to see destination
