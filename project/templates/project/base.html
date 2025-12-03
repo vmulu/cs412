@@ -14,10 +14,13 @@ Base template for the Django application.
 
     <body>
         <head>
-            <h1>
-                Travel Planner
-            </h1>
+            <a href="{% url 'all_trips' %}">
+                <h1>
+                    Travel Planner
+                </h1>
+            </a>
         </head>
+        <a href="{% url 'create_trip'%}" >Create Trip</a>
         {% block content %}
         {% endblock %}
     </body>

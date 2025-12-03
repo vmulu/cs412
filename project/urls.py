@@ -9,4 +9,6 @@ urlpatterns = [
     path('', TripListView.as_view(), name="all_trips"),
     path('trip/<int:pk>/', TripView.as_view(), name="trip"),
     path('destination/<int:pk>/', DestinationView.as_view(), name="destination"),
+    path('create_trip', CreateTripFormView.as_view(), name="create_trip"),
+    path('trip/<int:pk>/create_destination', CreateDestinationFormView.as_view(), name="create_destination"),
 ]

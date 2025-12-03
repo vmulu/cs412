@@ -42,6 +42,7 @@ Trip page that shows a singular trip information
             Destinations
         </h2>
             <div class="profile-grid">
+                <a href="{% url 'create_destination' trip.pk %}" >Add a destination</a>
                 {% for destination in trip.get_all_destinations %}
                     <a href="{% url 'destination' destination.pk %}">
                         <h2>

@@ -1,0 +1,29 @@
+<!--
+project/templates/project/create_trip_form.html
+Victoria Mulugeta vmulu@bu.edu
+Creating a trip form
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h1>
+    Create a Trip!
+</h1>
+
+<form action="{% url 'create_trip' %}" method=POST enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table>
+        {{form.as_table}}
+    </table>
+
+    <input type="submit" name="submit" value="submit">
+    <input type="reset" name="cancel" value="reset">
+
+    <a href="{% url 'all_trips' %}" class="button">Cancel</a>
+
+</form>
+
+{% endblock %}

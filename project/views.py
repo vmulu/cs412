@@ -2,9 +2,10 @@
 # Author: Victoria Mulugeta (vmulu@bu.edu)
 # Description: Defines the view functions and/or class-based views for the Django application.
 
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView, DetailView, CreateView
 from . models import *
+from . forms import *
 
 # Create your views here.
 
@@ -35,3 +36,59 @@ class DestinationView(DetailView):
     template_name = 'project/destination.html'
     context_object_name = 'destination'
 
+class CreateTripFormView(CreateView):
+    """
+    View class for creating a new Trip object
+    """
+
+    form_class = CreateTripForm
+    template_name = "project/create_trip_form.html"
+
+    def get_success_url(self):
+        """
+        Redirects to the newly created Trip's detail page.
+        """
+        # return a url of what to do after success
+        pk = self.object.pk
+        # reverse builds url
+        return reverse('trip', kwargs={'pk': pk})
+
+class CreateDestinationFormView(CreateView):
+    """
+    View class for creating a new Destination object
+    """
+
+    form_class = CreateDestinationForm
+    template_name = "project/create_destination_form.html"
+
+    def get_success_url(self):
+        """
+        Redirects to the newly created Destination's detail page.
+        """
+        # return a url of what to do after success
+        pk = self.object.pk
+        # reverse builds url
+        return reverse('destination', kwargs={'pk': pk})
+
+    def get_context_data(self):
+        """
+        Adds the trip object to the template context based on
+        the `pk` provided in the URL.
+        """
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        trip = Trip.objects.get(pk=pk)
+
+        context['trip'] = trip
+
+        return context
+
+    def form_valid(self, form):
+        """
+        Attaching trip before saving to db
+        """
+        destination = form.save(commit=False)
+        trip = get_object_or_404(Trip, pk=self.kwargs["pk"])
+        destination.trip = trip
+        destination.save()
+        return super().form_valid(form)

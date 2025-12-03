@@ -13,7 +13,7 @@ Destination page shows a singular destination information
     <!-- trip name-->
     <div>
         <h2>
-            {{destination.trip.name}}
+            {{destination.order}} Destination for {{destination.trip.name}}
         </h2>
     </div>
 
@@ -28,6 +28,26 @@ Destination page shows a singular destination information
         <p>
             {{destination.notes}}
         </p>
+    </div>
+
+    <!-- activity info -->
+    <div>
+        <h2>
+            Activities
+        </h2>
+        <div class="profile-grid">
+            {% for act in destination.get_all_activities %}
+                <h2>
+                    {{act.name}}
+                </h2>
+                <h3>
+                    Starts at {{act.time}}
+                </h3>
+                <p>
+                    {{act.notes}}
+                </p>
+            {% endfor %}
+        </div>
     </div>
 
 

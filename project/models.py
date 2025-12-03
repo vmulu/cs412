@@ -13,7 +13,8 @@ class Trip(models.Model):
     Stores information about a single trip
     """
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # need to change this back when i add users 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.TextField(blank=True)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -57,6 +58,13 @@ class Destination(models.Model):
 
     def __str__(self):
         return f"{self.name} Destination for {self.trip.name} Trip"
+
+    def get_all_activities(self):
+        """
+        finds and returns packing activities for a given trip
+        """
+        activities = Activity.objects.filter(destination=self)
+        return activities
 
 class Activity(models.Model):
     """
