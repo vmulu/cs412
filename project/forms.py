@@ -34,3 +34,30 @@ class CreateDestinationForm(forms.ModelForm):
             'departure_date',
             'notes',
         ]
+
+class CreatePackingListForm(forms.ModelForm):
+    """
+    Form for creating a new PackingList
+    """
+
+    class Meta:
+        model = PackingList
+        fields = [
+            'name',
+            'quantity',
+            'is_packed',
+        ]
+
+class CreateActivitiesForm(forms.ModelForm):
+    """
+    Form for creating s new Activity
+    """
+
+    class Meta:
+        model = Activity
+        fields = [
+            'name',
+            'time',
+            'is_booked',
+            'notes',
+        ]

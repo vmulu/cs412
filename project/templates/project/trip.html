@@ -30,9 +30,14 @@ Trip page that shows a singular trip information
         <h2>
             Packing List
         </h2>
-        <p>
-            {{trip.get_packing_list}}
-        </p>
+
+        {% if trip.get_packing_list %}
+            <p>{{ trip.get_packing_list }}</p>
+        {% else %}
+            <a href="{% url 'create_packing_list' trip.pk %}">
+                Add your packing list
+            </a>
+        {% endif %}
 
     </div>
 

@@ -13,7 +13,7 @@ class Trip(models.Model):
     Stores information about a single trip
     """
 
-    # need to change this back when i add users 
+    # need to change this back when i add users
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.TextField(blank=True)
     start_date = models.DateField(null=True, blank=True)

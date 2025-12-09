@@ -1,0 +1,29 @@
+<!--
+project/templates/project/create_packing_list.html
+Victoria Mulugeta vmulu@bu.edu
+Creating a packinglist form
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h1>
+    Add a Packing List for {{ trip.name }}!
+</h1>
+
+<form action="{% url 'create_packing_list' trip.pk %}" method=POST enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table>
+        {{form.as_table}}
+    </table>
+
+    <input type="submit" name="submit" value="submit">
+    <input type="reset" name="cancel" value="reset">
+
+    <a href="{% url 'trip' trip.pk %}" class="button">Cancel</a>
+
+</form>
+
+{% endblock %}

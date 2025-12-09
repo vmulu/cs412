@@ -13,7 +13,7 @@ Destination page shows a singular destination information
     <!-- trip name-->
     <div>
         <h2>
-            {{destination.order}} Destination for {{destination.trip.name}}
+            Destination {{destination.order}} for {{destination.trip.name}}
         </h2>
     </div>
 
@@ -47,6 +47,7 @@ Destination page shows a singular destination information
                     {{act.notes}}
                 </p>
             {% endfor %}
+            <a href="{% url 'create_activity' destination.pk %}"> Add an activity</a>
         </div>
     </div>
 

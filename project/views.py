@@ -92,3 +92,81 @@ class CreateDestinationFormView(CreateView):
         destination.trip = trip
         destination.save()
         return super().form_valid(form)
+
+class CreatePackingListFormView(CreateView):
+    """
+    View class for creating a packinglist
+    """
+
+    form_class = CreatePackingListForm
+    template_name = "project/create_packing_list.html"
+
+    def get_success_url(self):
+        """
+        Redirects to the newly created Trip's detail page.
+        """
+        # return a url of what to do after success
+        pk = self.object.pk
+        # reverse builds url
+        return reverse('trip', kwargs={'pk': pk})
+
+    def get_context_data(self):
+        """
+        Adds the trip object to the template context based on
+        the `pk` provided in the URL.
+        """
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        trip = Trip.objects.get(pk=pk)
+
+        context['trip'] = trip
+
+        return context
+
+    def form_valid(self, form):
+        """
+        Attaching trip before saving to db
+        """
+        destination = form.save(commit=False)
+        trip = get_object_or_404(Trip, pk=self.kwargs["pk"])
+        destination.trip = trip
+        destination.save()
+        return super().form_valid(form)
+
+class CreateActivityFormView(CreateView):
+    """
+    Activity form view
+    """
+
+    form_class = CreateActivitiesForm
+    template_name = "project/create_activity_form.html"
+
+    def get_success_url(self):
+        """
+        Redirects to the newly created Destination's detail page.
+        """
+        # return a url of what to do after success
+        pk = self.object.pk
+        # reverse builds url
+        return reverse('destination', kwargs={'pk': pk})
+
+    def get_context_data(self):
+        """
+        Adds the trip object to the template context based on
+        the `pk` provided in the URL.
+        """
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        destination = Destination.objects.get(pk=pk)
+
+        context['destination'] = destination
+
+        return context
+
+    def form_valid(self, form):
+        destination = get_object_or_404(Destination, pk=self.kwargs["pk"])
+        activity = form.save(commit=False)
+        activity.destination = destination
+        activity.save()
+        self.object = activity
+        return redirect("destination", pk=destination.pk)

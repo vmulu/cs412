@@ -11,4 +11,6 @@ urlpatterns = [
     path('destination/<int:pk>/', DestinationView.as_view(), name="destination"),
     path('create_trip', CreateTripFormView.as_view(), name="create_trip"),
     path('trip/<int:pk>/create_destination', CreateDestinationFormView.as_view(), name="create_destination"),
+    path('trip/<int:pk>/create_packing_list', CreatePackingListFormView.as_view(), name="create_packing_list"),
+    path('destination/<int:pk>/create_activity', CreateActivityFormView.as_view(), name="create_activity"),
 ]
