@@ -3,7 +3,7 @@
 # Description: Defines the view functions and/or class-based views for the Django application.
 
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from . models import *
 from . forms import *
 
@@ -204,3 +204,30 @@ class UpdatePackingListFormView(UpdateView):
         pk = self.object.pk
         # reverse builds url
         return reverse('trip', kwargs={'pk': pk})
+
+class DeleteTripView(DeleteView):
+    """
+    View for deleting a trip
+    """
+
+    model = Trip
+    template_name = 'project/delete_trip.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        adding trip to context
+        """
+
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        trip = Trip.objects.get(pk=pk)
+
+        context['trip'] = trip
+
+        return context
+
+    def get_success_url(self):
+        """
+        Redirects to the home page.
+        """
+        return reverse('all_trips')

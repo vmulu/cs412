@@ -14,4 +14,5 @@ urlpatterns = [
     path('trip/<int:pk>/create_packing_list', CreatePackingListFormView.as_view(), name="create_packing_list"),
     path('destination/<int:pk>/create_activity', CreateActivityFormView.as_view(), name="create_activity"),
     path('trip/<int:pk>/packing_list/update', UpdatePackingListFormView.as_view(), name="update_packing_list"),
+    path('trip/<int:pk>/delete', DeleteTripView.as_view(), name="delete_trip"),
 ]

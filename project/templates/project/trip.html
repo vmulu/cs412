@@ -62,6 +62,10 @@ Trip page that shows a singular trip information
                 {% endfor %}
             </div>
     </div>
+    <div>
+        <a href="{% url 'delete_trip' trip.pk %}"> Delete Trip</a>
+    </div>
+
 </div>
 
 {% endblock %}

@@ -1,0 +1,27 @@
+<!--
+project/templates/project/delete_trip.html
+Victoria Mulugeta vmulu@bu.edu
+Delete page for a trip
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h1>
+    Are you sure you would like to delete this trip?
+</h1>
+
+<h2>
+    {{trip.name}}
+</h2>
+
+<form method='POST'>
+    {% csrf_token %}
+    <input type='submit' value="Delete">
+</form>
+<form action="{% url 'trip' trip.pk %}" method="GET">
+    <input type='submit' value="Cancel">
+</form>
+
+{% endblock %}
