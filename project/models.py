@@ -35,8 +35,10 @@ class Trip(models.Model):
         """
         finds and returns packing list for a given trip
         """
-        packing_list = PackingList.objects.get(trip=self)
-        return packing_list
+        try:
+            return PackingList.objects.get(trip=self)
+        except PackingList.DoesNotExist:
+            return None
 
     def get_absolute_url(self):
         """

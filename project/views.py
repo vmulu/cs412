@@ -3,7 +3,7 @@
 # Description: Defines the view functions and/or class-based views for the Django application.
 
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from . models import *
 from . forms import *
 
@@ -164,9 +164,43 @@ class CreateActivityFormView(CreateView):
         return context
 
     def form_valid(self, form):
+        """
+        attaching destination pk to activity
+        """
         destination = get_object_or_404(Destination, pk=self.kwargs["pk"])
         activity = form.save(commit=False)
         activity.destination = destination
         activity.save()
         self.object = activity
         return redirect("destination", pk=destination.pk)
+
+class UpdatePackingListFormView(UpdateView):
+    """
+    View for updating packing list
+    """
+
+    model = PackingList
+    template_name = 'project/update_packing_list.html'
+    form_class = UpdatePackingListForm
+
+    def get_context_data(self):
+        """
+        Adds the trip object to the template context based on
+        the `pk` provided in the URL.
+        """
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        trip = Trip.objects.get(pk=pk)
+
+        context['trip'] = trip
+
+        return context
+
+    def get_success_url(self):
+        """
+        Redirects to the newly created Trip's detail page.
+        """
+        # return a url of what to do after success
+        pk = self.object.pk
+        # reverse builds url
+        return reverse('trip', kwargs={'pk': pk})

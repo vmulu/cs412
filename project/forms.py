@@ -61,3 +61,16 @@ class CreateActivitiesForm(forms.ModelForm):
             'is_booked',
             'notes',
         ]
+
+class UpdatePackingListForm(forms.ModelForm):
+    """
+    Form for updating a packing list
+    """
+
+    class Meta:
+        model = PackingList
+        fields = [
+            'name',
+            'quantity',
+            'is_packed',
+        ]

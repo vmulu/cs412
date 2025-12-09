@@ -1,0 +1,28 @@
+<!--
+project/templates/project/update_packing_list.html
+Victoria Mulugeta vmulu@bu.edu
+Form template for updating a packing list
+ -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h4>
+    Update Packing List
+</h4>
+<form action="{% url 'update_packing_list' trip.pk %}"  method = 'POST'>
+    {% csrf_token %}
+
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type='submit' name = 'update_packing_list' value= 'Update Packing List!'>
+
+</form>
+<form action="{% url 'trip' packinglist.trip.pk %}" method="GET">
+    <input type="submit" value="cancel">
+</form>
+
+
+{% endblock %}
