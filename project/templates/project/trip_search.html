@@ -1,0 +1,16 @@
+<!--
+project/templates/project/trip_search.html
+Victoria Mulugeta vmulu@bu.edu
+Search bar for trips and destinations
+-->
+
+{% extends "project/base.html" %}
+
+{% block content %}
+<h1>Search Trips</h1>
+
+<form method="GET" action="{% url 'search' %}">
+    <input type="text" name="query" placeholder="Search trips..." />
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

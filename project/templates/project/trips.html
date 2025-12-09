@@ -8,10 +8,15 @@ Trips page that shows all of the users trips
 
 {% block content %}
 
-<div class="profile-grid">
+<div class="card">
     {% for trip in trips %}
     <a href="{% url 'trip' trip.pk %}">
-        <div class="all_profiles">
+        <div class="card trip-card">
+            {% if trip.is_completed %}
+                <span class="status-badge completed">Completed</span>
+            {% else %}
+                <span class="status-badge not-completed">In Progress</span>
+            {% endif %}
             <h2>
                 {{trip.name}}
             </h2>

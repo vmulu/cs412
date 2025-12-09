@@ -4,6 +4,7 @@
 
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.db.models import Q
 from . models import *
 from . forms import *
 
@@ -231,3 +232,58 @@ class DeleteTripView(DeleteView):
         Redirects to the home page.
         """
         return reverse('all_trips')
+
+class SearchView(ListView):
+    """
+    View for trip search
+    """
+
+    model = Trip
+    template_name = 'project/trip_search_results.html'
+    context_object_name = 'trip'
+
+    def get_context_data(self, **kwargs):
+        """
+        adding query to context
+        """
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("query")
+
+        if query:
+            context["query"] = query
+
+            context["trips"] = Trip.objects.filter(
+                Q(name__icontains=query) |
+                Q(notes__icontains=query)
+            )
+
+            context["destinations"] = Destination.objects.filter(
+                Q(name__icontains=query) |
+                Q(notes__icontains=query)
+            )
+        else:
+            context["trips"] = Trip.objects.none()
+            context["destinations"] = Destination.objects.none()
+
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        show search page or show results
+        """
+        if "query" not in request.GET:
+            return render(request, "project/trip_search.html", {})
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        """
+        obtains the QuerySet of instance data
+        """
+        query = self.request.GET.get("query")
+
+        if not query:
+            return Trip.objects.none()
+
+        return Trip.objects.filter(
+            Q(name__icontains=query) | Q(notes__icontains=query)
+        )

@@ -8,9 +8,9 @@ Form template for updating a packing list
 
 {% block content %}
 
-<h4>
+<h1>
     Update Packing List
-</h4>
+</h1>
 <form action="{% url 'update_packing_list' trip.pk %}"  method = 'POST'>
     {% csrf_token %}
 

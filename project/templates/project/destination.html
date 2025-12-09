@@ -8,17 +8,17 @@ Destination page shows a singular destination information
 
 {% block content %}
 
-<div class="profile-container">
+<div>
 
     <!-- trip name-->
-    <div>
+    <div class="card">
         <h2>
             Destination {{destination.order}} for {{destination.trip.name}}
         </h2>
     </div>
 
     <!-- destination info -->
-    <div class="profile-grid">
+    <div class="card trip-card">
         <h2>
             {{destination.name}}
         </h2>
@@ -31,11 +31,11 @@ Destination page shows a singular destination information
     </div>
 
     <!-- activity info -->
-    <div>
+    <div class="card trip-card">
         <h2>
             Activities
         </h2>
-        <div class="profile-grid">
+        <div>
             {% for act in destination.get_all_activities %}
                 <h2>
                     {{act.name}}

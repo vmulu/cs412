@@ -9,7 +9,7 @@ Base template for the Django application.
 <html>
     <head>
         <title> Travel Planner </title>
-        <link rel="stylesheet" href="{% static 'mini_insta-styles.css' %}">
+        <link rel="stylesheet" href="{% static 'project.css' %}">
     </head>
 
     <body>
@@ -20,7 +20,16 @@ Base template for the Django application.
                 </h1>
             </a>
         </head>
-        <a href="{% url 'create_trip'%}" >Create Trip</a>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'create_trip'%}" >Create Trip</a>
+                </li>
+                <li>
+                    <a href="{% url 'search' %}">Search trips</a>
+                </li>
+            </ul>
+        </nav>
         {% block content %}
         {% endblock %}
     </body>

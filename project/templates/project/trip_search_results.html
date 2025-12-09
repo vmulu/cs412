@@ -1,0 +1,52 @@
+
+<!--
+project/templates/project/trip_search_results.html
+Victoria Mulugeta vmulu@bu.edu
+Showing search results
+-->
+
+{% extends "project/base.html" %}
+
+{% block content %}
+<h1>Search Results</h1>
+
+<form method="GET" action="{% url 'search' %}">
+    <input type="text" name="query" placeholder="Search trips..." value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+<h2>Trips</h2>
+<div class="card trip-card">
+    {% if trips %}
+        <ul>
+            {% for trip in trips %}
+                <li>
+                    <h2>
+                        <a href="{% url 'trip' trip.pk %}">{{ trip.name }}</a>
+                    </h2>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No trips found.</p>
+    {% endif %}
+</div>
+
+<h2>Matching Destinations</h2>
+<div class="card">
+    {% if destinations %}
+        <ul>
+            {% for dest in destinations %}
+                <li>
+                    <h2>
+                        <a href="{% url 'destination' dest.pk %}">{{ dest.name }}</a>
+                    </h2>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No destinations found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

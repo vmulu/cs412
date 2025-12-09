@@ -8,28 +8,28 @@ Trip page that shows a singular trip information
 
 {% block content %}
 
-<div class="profile-container">
+<div class="card">
 
     <!-- trip -->
-    <div>
-        <h2>
-            {{trip.name}}
-        </h2>
+    <h2>
+        {{trip.name}}
+    </h2>
+    <div class="card trip-card">
         <h3>
             {{trip.start_date}} to {{trip.end_date}}
         </h3>
         <p>
-            {{trip.notes}}
+            {% if trip.notes %}<br>{{ trip.notes }}{% endif %}
         </p>
     </div>
 
     <!-- add if statement when theres none put add list when there is something make it edit list -->
     <!-- add is packing switch -->
     <!-- packing list -->
-    <div>
-        <h2>
-            Packing List
-        </h2>
+    <h2>
+        Packing List
+    </h2>
+    <div class="card trip-card">
         {% if trip.get_packing_list %}
             <p>{{ trip.get_packing_list }}</p>
             <a href="{% url 'update_packing_list' trip.pk %}">
@@ -48,8 +48,7 @@ Trip page that shows a singular trip information
         <h2>
             Destinations
         </h2>
-            <div class="profile-grid">
-                <a href="{% url 'create_destination' trip.pk %}" >Add a destination</a>
+            <div class="card trip-card">
                 {% for destination in trip.get_all_destinations %}
                     <a href="{% url 'destination' destination.pk %}">
                         <h2>
@@ -60,6 +59,7 @@ Trip page that shows a singular trip information
                         </h3>
                     </a>
                 {% endfor %}
+                <a href="{% url 'create_destination' trip.pk %}" >Add a destination</a>
             </div>
     </div>
     <div>
